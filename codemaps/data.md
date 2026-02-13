@@ -2,26 +2,25 @@
 
 **Updated:** 2025-02-13
 
-## Backend Entities (MikroORM)
+## Database Models (Prisma)
 
-### BaseEntity
+### Schema Location
 
-- `common/entities/base.entity.ts`
-- Fields: `id` (uuid), `createdAt`, `updatedAt`
-- Abstract base for all entities
+- `packages/db/prisma/schema.prisma`
+- All models defined in Prisma schema format
 
-### Dummy
+### Dummy Model
 
-- `common/entities/dummy.entity.ts`
-- Extends BaseEntity
-- Placeholder (remove when adding real entities)
+- Base fields: `id` (UUID), `createdAt`, `updatedAt`
+- Placeholder model (remove when adding real models)
+- All models should include these base fields for consistency
 
 ## Config Schemas
 
 ### ConfigKey (Backend)
 
 - `config/config-key.enum.ts`
-- Keys: NODE*ENV, FRONTEND_HOST, PORT, ENABLE_SWAGGER, POSTGRES*_, REDIS\__, MAIL\_\*, MAILDEV_WEB_PORT
+- Keys: NODE*ENV, FRONTEND_HOST, PORT, ENABLE_SWAGGER, POSTGRES*\_, REDIS\_\_, MAIL\_\*, MAILDEV_WEB_PORT
 
 ### Validation (Backend)
 
@@ -31,8 +30,16 @@
 ## Frontend Types
 
 - `FloatLabelInputTextProps` → `components/float-label-input-text/types/`
-- `ErrorResponse` (backend) → `common/filters/mikro-orm-exception/types/`
+- `ErrorResponse` (backend) → `common/filters/prisma-exception/types/`
 
-## Shared Package
+## Shared Packages
+
+### `packages/shared`
 
 - `packages/shared/src/index.ts` — empty, reserved for shared DTOs/types
+
+### `packages/db`
+
+- Prisma ORM setup and configuration
+- Centralized database schema and migrations
+- Exports: `PrismaClient`, `PrismaService`, `PrismaModule`

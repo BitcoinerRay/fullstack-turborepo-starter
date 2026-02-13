@@ -69,17 +69,16 @@ docker compose exec postgres psql -U postgres -d nest_boilerplate
 
 ### Backend (`apps/nestjs-backend/package.json`)
 
-| Script           | Command                              | Description             |
-| ---------------- | ------------------------------------ | ----------------------- |
-| build            | `nest build`                         | Compile NestJS          |
-| dev              | `nest start --watch`                 | Dev with watch          |
-| start:dev        | `nest start --watch`                 | Dev with watch (legacy) |
-| start:prod       | `node dist/src/main`                 | Production run          |
-| migration:create | `npx mikro-orm migration:create`     | Create migration        |
-| migration:up     | `npx mikro-orm migration:up`         | Apply migrations        |
-| migration:down   | `npx mikro-orm migration:down`       | Rollback migration      |
-| test:unit        | `jest`                               | Unit tests              |
-| test:e2e         | `jest --config ./test/jest-e2e.json` | E2E tests               |
+| Script     | Command                              | Description             |
+| ---------- | ------------------------------------ | ----------------------- |
+| build      | `nest build`                         | Compile NestJS          |
+| dev        | `nest start --watch`                 | Dev with watch          |
+| start:dev  | `nest start --watch`                 | Dev with watch (legacy) |
+| start:prod | `node dist/src/main`                 | Production run          |
+| test:unit  | `jest`                               | Unit tests              |
+| test:e2e   | `jest --config ./test/jest-e2e.json` | E2E tests               |
+
+**Note:** Database migrations are now managed in the `packages/db` package using Prisma. See `packages/db/README.md` for migration commands.
 
 ### Frontend (`apps/nextjs-frontend/package.json`)
 

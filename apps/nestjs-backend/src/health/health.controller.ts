@@ -1,19 +1,14 @@
 import {Controller, Get} from '@nestjs/common';
 import {ApiTags, ApiOperation, ApiResponse} from '@nestjs/swagger';
-import {
-  HealthCheckService,
-  HealthCheck,
-  MikroOrmHealthIndicator,
-  HealthIndicatorResult,
-  HealthCheckResult,
-} from '@nestjs/terminus';
+import {HealthCheckService, HealthCheck, HealthIndicatorResult, HealthCheckResult} from '@nestjs/terminus';
+import {PrismaHealthIndicator} from './prisma.health';
 
 @ApiTags('health')
 @Controller('health')
 export class HealthController {
   constructor(
     private readonly health: HealthCheckService,
-    private readonly db: MikroOrmHealthIndicator,
+    private readonly db: PrismaHealthIndicator,
   ) {}
 
   @Get()

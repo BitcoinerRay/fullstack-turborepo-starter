@@ -4,7 +4,7 @@ import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import {AppModule} from './app.module';
-import {MikroOrmExceptionFilter} from './common/filters/mikro-orm-exception/mikro-orm-exception.filter';
+import {PrismaExceptionFilter} from './common/filters/prisma-exception/prisma-exception.filter';
 import {Logger as LoggerService} from './common/logger/logger.service';
 
 async function bootstrap(): Promise<void> {
@@ -33,7 +33,7 @@ async function bootstrap(): Promise<void> {
 
   app.setGlobalPrefix('api');
 
-  app.useGlobalFilters(new MikroOrmExceptionFilter());
+  app.useGlobalFilters(new PrismaExceptionFilter());
 
   if (process.env.ENABLE_SWAGGER === 'true') {
     const swaggerConfig = new DocumentBuilder()

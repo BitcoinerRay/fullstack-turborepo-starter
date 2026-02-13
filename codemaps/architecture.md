@@ -9,23 +9,25 @@ Turborepo monorepo with Next.js frontend and NestJS backend.
 ```
 apps/
   nestjs-backend/   # API (Express)
-  nextjs-frontend/ # Next.js 16 App Router
+  nextjs-frontend/  # Next.js 16 App Router
 packages/
-  shared/           # Shared types/utils (empty)
+  db/               # Prisma ORM + PostgreSQL
+  shared/           # Shared types/utils
 ```
 
 ## Dependency Graph
 
 - **Root:** `turbo`, `husky`, `prettier`, `commitlint`
-- **Backend →** `@nestjs/*`, `@mikro-orm/*`, `ioredis`, `joi`, `helmet`, `cookie-parser`
+- **Backend →** `@nestjs/*`, `@next-nest-turbo-auth-boilerplate/db`, `ioredis`, `joi`, `helmet`, `cookie-parser`
+- **Database →** `@prisma/client`, `prisma`
 - **Frontend →** `next`, `next-intl`, `primereact`, `@tanstack/react-query`, `zustand`, `zod`
-- **Both →** `@next-nest-turbo-auth-boilerplate/shared` (internal)
+- **Shared →** `@next-nest-turbo-auth-boilerplate/shared` (internal, used by both apps)
 
 ## Build Pipeline
 
-- `turbo.json`: build depends on `^build`
-- Outputs: `dist/**` (backend), `.next/**` (frontend)
-- Tasks: `build`, `start:dev`, `start:prod`, `lint`, `test:unit`, `test:e2e`, `docker:build`
+- `turbo.json`: build depends on `^build` and `^db:generate`
+- Outputs: `dist/**` (backend/packages), `.next/**` (frontend), `node_modules/.prisma/client` (db)
+- Tasks: `build`, `db:generate`, `start:dev`, `start:prod`, `lint`, `test:unit`, `test:e2e`, `docker:build`
 
 ## Cross-App
 

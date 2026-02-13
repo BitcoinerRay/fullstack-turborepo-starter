@@ -33,34 +33,12 @@ const xoConfig = [
       // Nest.js specific rules
       '@typescript-eslint/consistent-type-imports': 'off', // Open API doc fails to recognize type import of DTOs correctly
       'n/prefer-global/process': 'off',
-
-      // Forbid mikro orm findOneOrFail -> it's better to use findOne and handle the error manually
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: "CallExpression[callee.property.name='findOneOrFail']",
-          message:
-            "Avoid using 'findOneOrFail' as it will always throw an internal server error on fail. Use 'findOne' with manual error handling instead.",
-        },
-      ],
     },
   },
 
   // File-specific overrides
-  // Disables to follow mikro orm conventions for file names
-  {
-    files: ['src/migrations/**/*'],
-    rules: {
-      'unicorn/filename-case': 'off',
-    },
-  },
-  // Disables to follow mikro orm conventions for relations
-  {
-    files: ['**/*.entity.ts'],
-    rules: {
-      'import/no-cycle': 'off',
-    },
-  },
+  // Note: Entity file overrides removed as Prisma uses a different approach
+  // Prisma models are defined in schema.prisma, not TypeScript entity files
 ];
 
 export default xoConfig;

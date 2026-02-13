@@ -4,7 +4,7 @@
 
 ## Entry
 
-- `main.ts` → `AppModule`, global ValidationPipe, MikroOrmExceptionFilter, Swagger
+- `main.ts` → `AppModule`, global ValidationPipe, PrismaExceptionFilter, Swagger
 
 ## Modules
 
@@ -25,11 +25,10 @@ src/
   config/           # app.config, validation.schema, ConfigKey
   common/
     decorators/     # ValidateHeader
-    entities/       # BaseEntity, Dummy
-    filters/        # MikroOrmExceptionFilter
+    filters/        # PrismaExceptionFilter
     logger/         # LoggerMiddleware, LoggerModule, LoggerService
   email/            # EmailModule, EmailService, AcceptedLanguages
-  health/           # HealthController, HealthModule
+  health/           # HealthController, HealthModule, PrismaHealthIndicator
   redis/            # RedisModule, RedisService
   utils/            # time.util (oneSecond, oneMinute, etc.)
 ```
@@ -37,11 +36,12 @@ src/
 ## External Deps
 
 - `@nestjs/*` (common, core, config, schedule, swagger, terminus, throttler)
-- `@mikro-orm/*` (core, nestjs, postgresql, migrations)
+- `@next-nest-turbo-auth-boilerplate/db` (internal package with Prisma)
 - `@nestjs-modules/mailer`, `ioredis`, `joi`, `helmet`, `cookie-parser`, `uuid`
 
 ## Data
 
-- ORM: MikroORM + PostgreSQL
-- Migrations: `@mikro-orm/migrations`
-- Config: `mikro-orm.config.ts` (root of nestjs-backend)
+- ORM: Prisma + PostgreSQL
+- Database Package: `packages/db` (centralized schema and migrations)
+- Schema: `packages/db/prisma/schema.prisma`
+- Migrations: `packages/db/prisma/migrations/`

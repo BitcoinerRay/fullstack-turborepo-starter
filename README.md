@@ -29,10 +29,12 @@ npm run dev:all
 
 **Important:** Edit `apps/nestjs-backend/.env` to ensure `DATABASE_URL` credentials match root `.env`.
 
+After first run or `npm install`, run `cd packages/db && npm run db:generate` (or run `npm run build` once) before starting the backend so Prisma Client is available.
+
 Then apply migrations:
 
 ```bash
-cd apps/nestjs-backend && npm run migration:up
+cd packages/db && npm run migrate:deploy
 ```
 
 Your app should now be running:
@@ -69,12 +71,15 @@ Your app should now be running:
 4. **Run Migrations**
 
    ```bash
-   cd apps/nestjs-backend
-   npm run migration:up
+   cd packages/db
+   npm run migrate:deploy
    cd ../..
    ```
 
 5. **Start Applications**
+
+   After first run or `npm install`, run `cd packages/db && npm run db:generate` (or `npm run build` once) before starting the backend.
+
    ```bash
    npm run dev  # Start Next.js + NestJS
    ```
@@ -111,13 +116,15 @@ This project follows the **"infrastructure in containers, apps on host"** patter
 
 - **NestJS**
 - **TypeScript**
-- **MikroORM** + **PostgreSQL**
+- **Prisma** + **PostgreSQL**
 - **Templated email service**
 - **class-validator**
 
 ➡️ More in [apps/nestjs-backend/README.md](./apps/nestjs-backend/README.md)
 
-### 📦 Shared (`packages/shared`)
+### 📦 Shared Packages
+
+#### `packages/shared`
 
 - **TypeScript**
 - **class-validator**
@@ -125,6 +132,15 @@ This project follows the **"infrastructure in containers, apps on host"** patter
 - Type-safe API contracts
 
 ➡️ More in [packages/shared/README.md](./packages/shared/README.md)
+
+#### `packages/db`
+
+- **Prisma ORM**
+- **PostgreSQL** database client
+- Centralized schema & migrations
+- Type-safe database access
+
+➡️ More in [packages/db/README.md](./packages/db/README.md)
 
 ---
 

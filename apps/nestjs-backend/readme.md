@@ -23,4 +23,4 @@ This boilerplate provides a production-ready NestJS setup with key features comm
 - **Separation of Concerns**: Each concern lives in its own module
 - **Environment Awareness**: Development vs production behaviors clearly separated
 - **Clean Logging & Error Handling**: Structured and developer-friendly
-- **MikroORM and PostgreSQL**: Strongly integrates MikroORM and PostgreSQL
+- **Prisma and PostgreSQL**: Type-safe database access with Prisma ORM and PostgreSQL

@@ -1,10 +1,9 @@
-import {MikroOrmModule} from '@mikro-orm/nestjs';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {APP_GUARD} from '@nestjs/core';
 import {ScheduleModule} from '@nestjs/schedule';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
-import mikroOrmConfig from 'mikro-orm.config';
+import {PrismaModule} from '@next-nest-turbo-auth-boilerplate/db';
 import {CommonModule} from './common/common.module';
 import appConfig from './config/app.config';
 import validationSchema from './config/validation.schema';
@@ -19,7 +18,7 @@ import {RedisModule} from './redis/redis.module';
       load: [appConfig],
     }),
     ScheduleModule.forRoot(),
-    MikroOrmModule.forRoot(mikroOrmConfig),
+    PrismaModule,
     ThrottlerModule.forRoot({
       throttlers: [
         {
