@@ -1,7 +1,6 @@
-import {type RefAttributes} from 'react';
-import {type InputTextProps} from 'primereact/inputtext';
+import {type InputHTMLAttributes, type RefAttributes} from 'react';
 
-export type FloatLabelInputTextProps = InputTextProps &
+export type FloatLabelInputTextProps = InputHTMLAttributes<HTMLInputElement> &
   RefAttributes<HTMLInputElement> & {
     label: string;
   };

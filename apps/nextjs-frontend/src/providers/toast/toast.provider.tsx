@@ -1,7 +1,18 @@
 'use client';
 
-import {createContext, type JSX, type ReactNode, useCallback, useRef} from 'react';
-import {Toast, type ToastMessage} from 'primereact/toast';
+import {createContext, type JSX, type ReactNode, useCallback} from 'react';
+import {toast} from 'sonner';
+import {Toaster} from '@/components/ui/sonner.tsx';
+
+// Keep PrimeReact's ToastMessage interface for backward compatibility
+export type ToastMessage = {
+  severity?: 'success' | 'info' | 'warn' | 'error';
+  summary?: string;
+  detail?: string;
+  life?: number;
+  closable?: boolean;
+  sticky?: boolean;
+};
 
 export type ShowToastFunction = (options: ToastMessage) => void;
 
@@ -11,17 +22,47 @@ const defaultToastLife = 3000;
 export const ToastContext = createContext<ShowToastFunction>(() => {});
 
 export function ToastProvider({children}: {readonly children: ReactNode}): JSX.Element {
-  const toastRef = useRef<Toast>(null);
-
   const showToast: ShowToastFunction = useCallback((options: ToastMessage): void => {
-    options.life ??= defaultToastLife;
+    const {severity = 'info', summary, detail, life, closable = true, sticky = false} = options;
 
-    toastRef?.current?.show(options);
+    // Map PrimeReact options to Sonner options
+    const duration = sticky ? Infinity : (life ?? defaultToastLife);
+    const message = summary ?? '';
+    const description = detail;
+
+    const sonnerOptions = {
+      description,
+      duration,
+      closeButton: closable,
+    };
+
+    // Call the appropriate toast function based on severity
+    switch (severity) {
+      case 'success': {
+        toast.success(message, sonnerOptions);
+        break;
+      }
+
+      case 'error': {
+        toast.error(message, sonnerOptions);
+        break;
+      }
+
+      case 'warn': {
+        toast.warning(message, sonnerOptions);
+        break;
+      }
+
+      case 'info': {
+        toast.info(message, sonnerOptions);
+        break;
+      }
+    }
   }, []);
 
   return (
     <ToastContext value={showToast}>
-      <Toast ref={toastRef} />
+      <Toaster />
       {children}
     </ToastContext>
   );

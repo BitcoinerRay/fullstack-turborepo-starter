@@ -2,7 +2,7 @@ import {type FlatXoConfig} from 'xo';
 
 const xoConfig: FlatXoConfig = [
   {
-    ignores: ['node_modules', 'postcss.config.mjs'],
+    ignores: ['node_modules', 'postcss.config.mjs', 'src/components/ui'],
   },
   {
     react: true,
