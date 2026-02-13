@@ -1,0 +1,25 @@
+# Codemap Diff Report
+
+**Generated:** 2025-02-13
+
+## Summary
+
+- **Previous codemaps:** None (initial generation)
+- **Diff percentage:** 100% (all new)
+- **Action:** Created initial codemaps
+
+## Files Created
+
+| File | Lines |
+|------|-------|
+| codemaps/architecture.md | ~40 |
+| codemaps/backend.md | ~55 |
+| codemaps/frontend.md | ~55 |
+| codemaps/data.md | ~45 |
+
+## Analysis Stats
+
+- Backend source files: 24
+- Frontend source files: 22
+- Shared package files: 1
+- Total analyzed: 47

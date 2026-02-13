@@ -2,68 +2,95 @@
 
 This monorepo provides a modern fullstack boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
 
-It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.tack Turborepo
-
-This monorepo provides a modern fullstack boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
-
-It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.Fullstack Auth Turborepo
-
-This monorepo provides a modern fullstack authentication boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
-
-It’s designed for scalability, type safety, and developer experience — ideal as a base for full-featured auth-driven applications.
+It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.
 
 ---
 
 ## 1. 📦 Getting Started
 
-### 1. Use as Template or Clone
+### Quickstart (One Command)
 
-Use this repo as a GitHub template (recommended), or clone it directly:
+For new team members, use the one-command setup:
 
-- `git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git`
-- `cd next-nest-turbo-boilerplate`
+```bash
+# Clone and navigate to repo
+git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git
+cd next-nest-turbo-boilerplate
 
-### 2. Build Shared Package
+# Install dependencies
+npm install
 
-Build the shared package so it can be installed as dependency for the apps:
+# Copy environment files and start everything
+cp .env.example .env && \
+cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env && \
+cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env && \
+npm run dev:all
+```
 
-- `cd packages/shared`
-- `npm install`
-- `npm run build`
+**Important:** Edit `apps/nestjs-backend/.env` to ensure `DATABASE_URL` credentials match root `.env`.
 
-### 3. Install Dependencies
+Then apply migrations:
 
-Install root-level dependencies (workspace-based):
+```bash
+cd apps/nestjs-backend && npm run migration:up
+```
 
-- `npm install`
+Your app should now be running:
 
-This will install dependencies for all apps using Turborepo's workspace management.
+- Frontend: http://localhost:3000
+- Backend: http://localhost:4000
+- Maildev UI: http://localhost:1080
 
-### 4. Setup Environment Variables
+### Step-by-Step Setup (Experienced Developers)
 
-Each app has its own .env.example. Copy and configure them:
+1. **Clone and Install**
 
-- `cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env`
-- `cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env`
+   ```bash
+   git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git
+   cd next-nest-turbo-boilerplate
+   npm install
+   ```
 
-Then fill in the required environment variables based on your setup (e.g., database credentials, email service configs).
+2. **Setup Environment Files**
 
-### 5. Start the Backend
+   ```bash
+   cp .env.example .env
+   cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env
+   cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env
+   ```
 
-Start the database container and apply migrations:
+3. **Start Infrastructure** (Postgres, Redis, Maildev)
 
-- `cd apps/nestjs-backend`
-- `docker-compose up -d`
-- `npm run migration:create`
-- `npm run migration:up`
+   ```bash
+   npm run infra:start
+   npm run infra:health  # Wait for "healthy" status
+   ```
 
-### 6. Start dev mode
+4. **Run Migrations**
 
-At the root of your project, run:
+   ```bash
+   cd apps/nestjs-backend
+   npm run migration:up
+   cd ../..
+   ```
 
-- `npm run start:dev`
+5. **Start Applications**
+   ```bash
+   npm run dev  # Start Next.js + NestJS
+   ```
 
-Your app should now be running with both frontend and backend services in development mode.
+### Development Philosophy
+
+This project follows the **"infrastructure in containers, apps on host"** pattern:
+
+- **Infrastructure** (Postgres, Redis, Maildev) runs in Docker
+- **Applications** (Next.js, NestJS) run locally for fast HMR and debugging
+
+**Benefits:**
+
+- ✅ Unified environment across team (no "works on my machine")
+- ✅ Full IDE integration with breakpoints
+- ✅ Fast hot reload, no container rebuilds
 
 ---
 

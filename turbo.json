@@ -20,6 +20,10 @@
       "cache": false,
       "persistent": true
     },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
     "start:dev": {
       "cache": false,
       "persistent": true
@@ -36,14 +40,6 @@
     },
     "test:e2e": {
       "dependsOn": ["^build", "^test:e2e"]
-    },
-    "docker:build": {
-      "dependsOn": ["^build", "^docker:build"]
-    },
-    "docker:start:dev": {
-      "dependsOn": ["^docker:start:dev"],
-      "cache": false,
-      "persistent": true
     }
   }
 }
