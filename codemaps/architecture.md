@@ -27,7 +27,7 @@ packages/
 
 - `turbo.json`: build depends on `^build` and `^db:generate`
 - Outputs: `dist/**` (backend/packages), `.next/**` (frontend), `node_modules/.prisma/client` (db)
-- Tasks: `build`, `db:generate`, `start:dev`, `start:prod`, `lint`, `test:unit`, `test:e2e`, `docker:build`
+- Tasks: `build`, `db:generate`, `dev`, `start:dev`, `start:prod`, `lint`, `lint:fix`, `format`, `test:unit`, `test:unit:cov`, `test:e2e`
 
 ## Cross-App
 

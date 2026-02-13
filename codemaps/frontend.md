@@ -19,23 +19,28 @@ app/[locale]/
 
 ## Components
 
-| Component           | Path                                         | Exports             |
-| ------------------- | -------------------------------------------- | ------------------- |
-| Header              | `components/header/`                         | Header              |
-| Footer              | `components/footer/`                         | Footer              |
-| LocaleSelect        | `components/footer/components/LocaleSelect/` | LocaleSelect        |
-| FloatLabelInputText | `components/float-label-input-text/`         | FloatLabelInputText |
-| LoadingAnimation    | `components/loading-animation/`              | LoadingAnimation    |
+| Component           | Path                                         | Exports                                                                                   |
+| ------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Header              | `components/header/`                         | Header                                                                                    |
+| Footer              | `components/footer/`                         | Footer                                                                                    |
+| LocaleSelect        | `components/footer/components/LocaleSelect/` | LocaleSelect                                                                              |
+| FloatLabelInputText | `components/float-label-input-text/`         | FloatLabelInputText                                                                       |
+| LoadingAnimation    | `components/loading-animation/`              | LoadingAnimation                                                                          |
+| ui/                 | `components/ui/`                             | Button, Input, Label, Select, AlertDialog, DropdownMenu, NavigationMenu, Sonner (Toaster) |
 
 ## Providers
 
 - `ZodErrorProvider` (zod-error)
-- `ToastProvider` (toast)
+- `ToastProvider` (toast), `ConfirmProvider` (confirm)
 - `ReactQueryProvider` (react-query)
 
 ## Hooks
 
 - `useConfirmDialog`, `useToast`
+
+## Utils
+
+- `cn` → `lib/utils.ts` (classnames)
 
 ## i18n
 

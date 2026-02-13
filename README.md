@@ -1,157 +1,75 @@
-# 🚀 Fullstack Turborepo
+# Fullstack Turborepo
 
-This monorepo provides a modern fullstack boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
-
-It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.
+Monorepo: **Next.js** frontend and **NestJS** backend, managed with **Turborepo**. Built for scalability, type safety, and developer experience.
 
 ---
 
-## 1. 📦 Getting Started
+## Getting Started
 
-### Quickstart (One Command)
+**Requirements:** Node 24.x, npm 11.x (see `package.json` engines).
 
-For new team members, use the one-command setup:
+### One-command setup
 
 ```bash
-# Clone and navigate to repo
 git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git
 cd next-nest-turbo-boilerplate
-
-# Install dependencies
 npm install
 
-# Copy environment files and start everything
-cp .env.example .env && \
-cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env && \
-cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env && \
-npm run dev:all
+cp .env.example .env
+cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env
+cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env
+
+npm run infra:start
+npm run infra:health   # wait until healthy
+
+cd packages/db && npm run db:generate && npm run migrate:deploy && cd ../..
+npm run dev
 ```
 
-**Important:** Edit `apps/nestjs-backend/.env` to ensure `DATABASE_URL` credentials match root `.env`.
+Edit `apps/nestjs-backend/.env` so `DATABASE_URL` matches the Postgres settings in the root `.env`.
 
-After first run or `npm install`, run `cd packages/db && npm run db:generate` (or run `npm run build` once) before starting the backend so Prisma Client is available.
+**URLs:** Frontend http://localhost:3000 · Backend http://localhost:4000 · Maildev http://localhost:1080
 
-Then apply migrations:
+### Step-by-step
 
-```bash
-cd packages/db && npm run migrate:deploy
-```
+1. Clone, then `npm install`.
+2. Copy `.env.example` → `.env` in repo root, `apps/nextjs-frontend`, and `apps/nestjs-backend`.
+3. `npm run infra:start` then `npm run infra:health` (Docker: Postgres, Redis, Maildev).
+4. `cd packages/db && npm run db:generate && npm run migrate:deploy && cd ../..`
+5. `npm run dev` (Next.js + NestJS in parallel).
 
-Your app should now be running:
-
-- Frontend: http://localhost:3000
-- Backend: http://localhost:4000
-- Maildev UI: http://localhost:1080
-
-### Step-by-Step Setup (Experienced Developers)
-
-1. **Clone and Install**
-
-   ```bash
-   git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git
-   cd next-nest-turbo-boilerplate
-   npm install
-   ```
-
-2. **Setup Environment Files**
-
-   ```bash
-   cp .env.example .env
-   cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env
-   cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env
-   ```
-
-3. **Start Infrastructure** (Postgres, Redis, Maildev)
-
-   ```bash
-   npm run infra:start
-   npm run infra:health  # Wait for "healthy" status
-   ```
-
-4. **Run Migrations**
-
-   ```bash
-   cd packages/db
-   npm run migrate:deploy
-   cd ../..
-   ```
-
-5. **Start Applications**
-
-   After first run or `npm install`, run `cd packages/db && npm run db:generate` (or `npm run build` once) before starting the backend.
-
-   ```bash
-   npm run dev  # Start Next.js + NestJS
-   ```
-
-### Development Philosophy
-
-This project follows the **"infrastructure in containers, apps on host"** pattern:
-
-- **Infrastructure** (Postgres, Redis, Maildev) runs in Docker
-- **Applications** (Next.js, NestJS) run locally for fast HMR and debugging
-
-**Benefits:**
-
-- ✅ Unified environment across team (no "works on my machine")
-- ✅ Full IDE integration with breakpoints
-- ✅ Fast hot reload, no container rebuilds
+Infrastructure runs in Docker; apps run on the host for HMR and debugging.
 
 ---
 
-## 2. ⚙️ Base Tech Used
+## Tech Stack
 
-### 🖥 Frontend (`apps/frontend`)
+| Layer    | Path                   | Stack                                                                                                |
+| -------- | ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| Frontend | `apps/nextjs-frontend` | Next.js (App Router), TypeScript, Tailwind, PrimeReact, React Hook Form, Zod, React Query, next-intl |
+| Backend  | `apps/nestjs-backend`  | NestJS, TypeScript, Prisma, PostgreSQL, templated email, class-validator                             |
+| Shared   | `packages/shared`      | Shared types & DTOs, type-safe API contracts                                                         |
+| DB       | `packages/db`          | Prisma schema, migrations, generated client                                                          |
 
-- **Next.js** (App Router)
-- **TypeScript**
-- **Tailwind CSS** + **PrimeReact**
-- **React Hook Form** + **Zod**
-- **React Query**
-- **next-intl** (i18n)
-
-➡️ More in [apps/nextjs-frontend/README.md](./apps/nextjs-frontend/README.md)
-
-### 🛠 Backend (`apps/backend`)
-
-- **NestJS**
-- **TypeScript**
-- **Prisma** + **PostgreSQL**
-- **Templated email service**
-- **class-validator**
-
-➡️ More in [apps/nestjs-backend/README.md](./apps/nestjs-backend/README.md)
-
-### 📦 Shared Packages
-
-#### `packages/shared`
-
-- **TypeScript**
-- **class-validator**
-- Shared types & DTOs between frontend and backend
-- Type-safe API contracts
-
-➡️ More in [packages/shared/README.md](./packages/shared/README.md)
-
-#### `packages/db`
-
-- **Prisma ORM**
-- **PostgreSQL** database client
-- Centralized schema & migrations
-- Type-safe database access
-
-➡️ More in [packages/db/README.md](./packages/db/README.md)
+Details: [apps/nextjs-frontend/README.md](./apps/nextjs-frontend/README.md), [apps/nestjs-backend/README.md](./apps/nestjs-backend/README.md), [packages/shared/README.md](./packages/shared/README.md), [packages/db/README.md](./packages/db/README.md).
 
 ---
 
-## 3. 🤝 Contributing
+## Scripts
 
-This repo is intended to be cloned, extended, and customized. Feel free to open issues or submit PRs if you're improving the base or adapting it.
+| Command                                                | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| `npm run dev`                                          | Run Next.js + NestJS in dev                            |
+| `npm run dev:all`                                      | Start infra (Docker) then dev                          |
+| `npm run build`                                        | Build all apps and packages (includes Prisma generate) |
+| `npm run infra:start` / `infra:stop` / `infra:restart` | Docker Compose for Postgres, Redis, Maildev            |
+| `npm run lint` / `lint:fix`                            | Lint across the monorepo                               |
+| `npm run format`                                       | Prettier on TS/TSX/MD                                  |
 
 ---
 
-## 4. 📝 License
+## Contributing
 
-MIT — free to use, modify, and distribute.
+Clone, extend, and customize. Issues and PRs welcome.
 
-➡️ More in [LICENSE](./LICENSE)
+**License:** MIT — [LICENSE](./LICENSE)

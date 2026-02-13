@@ -11,7 +11,6 @@ export class PrismaHealthIndicator extends HealthIndicator {
 
   async pingCheck(key: string): Promise<HealthIndicatorResult> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       await this.prisma.$queryRaw`SELECT 1`;
       return this.getStatus(key, true);
     } catch (error) {
